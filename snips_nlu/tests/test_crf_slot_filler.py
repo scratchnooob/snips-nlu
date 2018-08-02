@@ -6,6 +6,7 @@ from pathlib import Path
 
 from mock import MagicMock
 
+from snips_nlu.builtin_entities import BuiltinEntityParser
 from snips_nlu.constants import (
     DATA, END, ENTITY, ENTITY_KIND, LANGUAGE_EN, RES_MATCH_RANGE, SLOT_NAME,
     SNIPS_DATETIME, START, TEXT, VALUE)
@@ -164,7 +165,10 @@ class TestCRFSlotFiller(FixtureTest):
         slot_filler = CRFSlotFiller(config)
         slot_filler.fit(dataset, intent)
         slot_filler.persist(self.tmp_file_path)
-        deserialized_slot_filler = CRFSlotFiller.from_path(self.tmp_file_path)
+        deserialized_slot_filler = CRFSlotFiller.from_path(
+            self.tmp_file_path,
+            builtin_entity_parser=BuiltinEntityParser("en", None)
+        )
 
         # When
         slots = deserialized_slot_filler.get_slots("make me two cups of tea")
@@ -418,7 +422,9 @@ class TestCRFSlotFiller(FixtureTest):
 
         # When
         slot_filler_bytes = slot_filler.to_byte_array()
-        loaded_slot_filler = CRFSlotFiller.from_byte_array(slot_filler_bytes)
+        loaded_slot_filler = CRFSlotFiller.from_byte_array(
+            slot_filler_bytes,
+            builtin_entity_parser=BuiltinEntityParser("en", None))
         slots = loaded_slot_filler.get_slots("make me two cups of tea")
 
         # Then
@@ -598,7 +604,9 @@ class TestCRFSlotFiller(FixtureTest):
                 raise ValueError("Unexpected tag sequence: %s" % tags_)
 
         slot_filler_config = CRFSlotFillerConfig(random_seed=42)
-        slot_filler = CRFSlotFiller(config=slot_filler_config)
+        slot_filler = CRFSlotFiller(
+            config=slot_filler_config,
+            builtin_entity_parser=BuiltinEntityParser("en", None))
         slot_filler.language = LANGUAGE_EN
         slot_filler.intent = "intent1"
         slot_filler.slot_name_mapping = {

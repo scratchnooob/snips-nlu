@@ -110,7 +110,8 @@ class TestDataset(SnipsTest):
     def test_should_format_dataset_by_adding_synonyms(
             self, mocked_get_string_variations):
         # Given
-        def mock_get_string_variations(variation, language):
+        def mock_get_string_variations(variation, language,
+                                       builtin_entity_parser):
             return {variation.lower(), variation.title()}
 
         mocked_get_string_variations.side_effect = mock_get_string_variations
@@ -161,7 +162,8 @@ class TestDataset(SnipsTest):
     def test_should_format_dataset_by_adding_entity_values(
             self, mocked_get_string_variations):
         # Given
-        def mock_get_string_variations(variation, language):
+        def mock_get_string_variations(variation, language,
+                                       builtin_entity_parser):
             return {variation, variation.title()}
 
         mocked_get_string_variations.side_effect = mock_get_string_variations
@@ -272,7 +274,8 @@ class TestDataset(SnipsTest):
     def test_should_add_missing_reference_entity_values_when_not_use_synonyms(
             self, mocked_get_string_variations):
         # Given
-        def mock_get_string_variations(variation, language):
+        def mock_get_string_variations(variation, language,
+                                       builtin_entity_parser):
             return {variation}
 
         mocked_get_string_variations.side_effect = mock_get_string_variations
@@ -412,7 +415,8 @@ class TestDataset(SnipsTest):
     def test_should_remove_empty_entities_value_and_empty_synonyms(
             self, mocked_get_string_variations):
         # Given
-        def mock_get_string_variations(variation, language):
+        def mock_get_string_variations(variation, language,
+                                       builtin_entity_parser):
             return {variation, variation.title()}
 
         mocked_get_string_variations.side_effect = mock_get_string_variations
@@ -524,7 +528,8 @@ class TestDataset(SnipsTest):
     def test_should_add_capitalize_field(
             self, mocked_get_string_variations):
         # Given
-        def mock_get_string_variations(variation, language):
+        def mock_get_string_variations(variation, language,
+                                       builtin_entity_parser):
             return {variation, variation.title()}
 
         mocked_get_string_variations.side_effect = mock_get_string_variations
@@ -694,7 +699,8 @@ class TestDataset(SnipsTest):
     def test_should_normalize_synonyms(
             self, mocked_get_string_variations):
         # Given
-        def mock_get_string_variations(variation, language):
+        def mock_get_string_variations(variation, language,
+                                       builtin_entity_parser):
             return {variation.lower(), variation.title()}
 
         mocked_get_string_variations.side_effect = mock_get_string_variations
@@ -767,7 +773,8 @@ class TestDataset(SnipsTest):
     def test_dataset_should_handle_synonyms(
             self, mocked_get_string_variations):
         # Given
-        def mock_get_string_variations(variation, language):
+        def mock_get_string_variations(variation, language,
+                                       builtin_entity_parser):
             return {variation.lower(), variation.title()}
 
         mocked_get_string_variations.side_effect = mock_get_string_variations
